@@ -1,5 +1,7 @@
 import {
+  Icon,
   Modal,
+  ModalCloseButton,
   ModalContent,
   ModalOverlay,
   useDisclosure,
@@ -10,6 +12,7 @@ import {
   useState,
   useCallback,
   useContext,
+  ReactElement,
 } from "react";
 
 interface ModalProviderProps {
@@ -19,14 +22,14 @@ interface ModalProviderProps {
 type ModalContextData = {
   isOpen: boolean;
   showModal: (Component: any) => void;
-  onClose: () => void;
+  closeModal: () => void;
 };
 
 const ModalContext = createContext({} as ModalContextData);
 
 export const ModalProvider = ({ children }: ModalProviderProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [Component, setComponent] = useState<ReactNode | null>(null);
+  const [Component, setComponent] = useState<any>(null);
 
   const showModal = useCallback(
     (Component: any) => {
@@ -37,12 +40,17 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     [onOpen]
   );
 
+  const closeModal = useCallback(() => {
+    setComponent(() => null);
+    onClose();
+  }, [onClose]);
+
   return (
-    <ModalContext.Provider value={{ showModal, isOpen, onClose }}>
+    <ModalContext.Provider value={{ showModal, closeModal, isOpen }}>
       {children}
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalContent>{Component}</ModalContent>
+      <Modal isOpen={isOpen} onClose={closeModal}>
         <ModalOverlay />
+        <ModalContent>{Component && <Component />}</ModalContent>
       </Modal>
     </ModalContext.Provider>
   );

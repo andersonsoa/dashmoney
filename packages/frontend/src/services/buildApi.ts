@@ -3,7 +3,7 @@ import { parseCookies } from "nookies";
 
 export function buildApi(ctx = undefined) {
   const api = axios.create({
-    baseURL: "http://localhost:3333",
+    baseURL: "http://localhost:3323",
   });
 
   const cookies = parseCookies(ctx);

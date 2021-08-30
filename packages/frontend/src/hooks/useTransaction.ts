@@ -8,7 +8,6 @@ type Transaction = {
   id: string;
   title: string;
   value: string;
-  transaction_type: TransactionType;
   created_at: string;
 };
 

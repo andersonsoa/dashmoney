@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useModal } from "../../contexts/ModalContext";
 import { Brand } from "./Brand";
@@ -8,7 +8,13 @@ interface HeaderProps {
   onAddTransaction: () => void;
 }
 
-export const Teste = () => <Box>Teste</Box>;
+export const Formulario = () => (
+  <Flex bg="gray.100" justify="center">
+    <Text color="gray.800" p="4">
+      Nova Transação
+    </Text>
+  </Flex>
+);
 
 export const Header = ({ onAddTransaction }: HeaderProps) => {
   const { user, signout } = useAuth();
@@ -32,7 +38,7 @@ export const Header = ({ onAddTransaction }: HeaderProps) => {
           <Button
             colorScheme="blackAlpha"
             bg="gray.700"
-            onClick={() => showModal(Teste)}
+            onClick={() => showModal(Formulario)}
           >
             Nova Transação
           </Button>
