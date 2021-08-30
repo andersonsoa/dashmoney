@@ -23,7 +23,6 @@ export const TransactionsTable = () => {
               <Th>#</Th>
               <Th>Descrição</Th>
               <Th>Valor</Th>
-              <Th>Tipo</Th>
               <Th>Data</Th>
             </Tr>
           </Thead>
@@ -34,7 +33,6 @@ export const TransactionsTable = () => {
                   <Td>{idx + 1}</Td>
                   <Td>{transaction.title}</Td>
                   <Td>{transaction.value}</Td>
-                  <Td>{transaction.transaction_type}</Td>
                   <Td>{transaction.created_at}</Td>
                 </Tr>
               );

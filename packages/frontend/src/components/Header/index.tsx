@@ -1,10 +1,18 @@
 import { Box, Button, Flex, Stack } from "@chakra-ui/react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useModal } from "../../contexts/ModalContext";
 import { Brand } from "./Brand";
 import { Profile } from "./Profile";
 
-export const Header = () => {
+interface HeaderProps {
+  onAddTransaction: () => void;
+}
+
+export const Teste = () => <Box>Teste</Box>;
+
+export const Header = ({ onAddTransaction }: HeaderProps) => {
   const { user, signout } = useAuth();
+  const { showModal } = useModal();
 
   return (
     <Box bg="gray.800" pb="8rem">
@@ -21,7 +29,11 @@ export const Header = () => {
         <Brand />
 
         <Stack direction="row" align="center" spacing="8">
-          <Button colorScheme="blackAlpha" bg="gray.700">
+          <Button
+            colorScheme="blackAlpha"
+            bg="gray.700"
+            onClick={() => showModal(Teste)}
+          >
             Nova Transação
           </Button>
 
