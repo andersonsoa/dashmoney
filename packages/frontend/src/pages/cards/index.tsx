@@ -1,5 +1,7 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { GetServerSidePropsContext } from "next";
 import { useModal } from "../../contexts/ModalContext";
+import { SSRAuth } from "../../utils/SSRAuth";
 
 export const Formulario = () => (
   <Flex bg="gray.100" justify="center">
@@ -19,3 +21,11 @@ export default function Cards() {
     </Box>
   );
 }
+
+export const getServerSideProps = SSRAuth(
+  async (ctx: GetServerSidePropsContext) => {
+    return {
+      props: {},
+    };
+  }
+);
