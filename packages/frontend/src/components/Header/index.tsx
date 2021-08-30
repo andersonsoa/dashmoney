@@ -8,17 +8,18 @@ interface HeaderProps {
   onAddTransaction: () => void;
 }
 
-export const Formulario = () => (
+export const Formulario = ({ onConfirm }: { onConfirm: () => void }) => (
   <Flex bg="gray.100" justify="center">
     <Text color="gray.800" p="4">
       Nova Transação
     </Text>
+    <Button onClick={onConfirm}>Confirmar</Button>
   </Flex>
 );
 
 export const Header = ({ onAddTransaction }: HeaderProps) => {
   const { user, signout } = useAuth();
-  const { showModal } = useModal();
+  const { showModal, closeModal } = useModal();
 
   return (
     <Box bg="gray.800" pb="8rem">
@@ -38,7 +39,7 @@ export const Header = ({ onAddTransaction }: HeaderProps) => {
           <Button
             colorScheme="blackAlpha"
             bg="gray.700"
-            onClick={() => showModal(Formulario)}
+            onClick={() => showModal(Formulario, { onConfirm: closeModal })}
           >
             Nova Transação
           </Button>

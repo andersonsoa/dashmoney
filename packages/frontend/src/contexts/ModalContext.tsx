@@ -21,7 +21,7 @@ interface ModalProviderProps {
 
 type ModalContextData = {
   isOpen: boolean;
-  showModal: (Component: any) => void;
+  showModal: (Component: any, props: any) => void;
   closeModal: () => void;
 };
 
@@ -32,8 +32,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [Component, setComponent] = useState<any>(null);
 
   const showModal = useCallback(
-    (Component: any) => {
-      setComponent(() => Component);
+    (Component: any, props) => {
+      setComponent(() => ({ element: Component, props }));
 
       onOpen();
     },
@@ -50,7 +50,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
       {children}
       <Modal isOpen={isOpen} onClose={closeModal}>
         <ModalOverlay />
-        <ModalContent>{Component && <Component />}</ModalContent>
+        <ModalContent>
+          {Component && <Component.element {...Component.props} />}
+        </ModalContent>
       </Modal>
     </ModalContext.Provider>
   );
