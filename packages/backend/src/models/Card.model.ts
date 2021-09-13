@@ -10,9 +10,6 @@ export class Card {
   title: string;
 
   @Column()
-  image?: string;
-
-  @Column()
   color: string;
 
   @Column()

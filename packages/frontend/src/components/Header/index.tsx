@@ -1,12 +1,15 @@
-import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Stack,
+  Text,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
 import { useAuth } from "../../contexts/AuthContext";
-import { useModal } from "../../contexts/ModalContext";
 import { Brand } from "./Brand";
 import { Profile } from "./Profile";
-
-interface HeaderProps {
-  onAddTransaction: () => void;
-}
+import { ActiveLink } from "./ActiveLink";
 
 export const Formulario = ({ onConfirm }: { onConfirm: () => void }) => (
   <Flex bg="gray.100" justify="center">
@@ -17,9 +20,8 @@ export const Formulario = ({ onConfirm }: { onConfirm: () => void }) => (
   </Flex>
 );
 
-export const Header = ({ onAddTransaction }: HeaderProps) => {
+export const Header = () => {
   const { user, signout } = useAuth();
-  const { showModal, closeModal } = useModal();
 
   return (
     <Box bg="gray.800" pb="8rem">
@@ -36,13 +38,15 @@ export const Header = ({ onAddTransaction }: HeaderProps) => {
         <Brand />
 
         <Stack direction="row" align="center" spacing="8">
-          <Button
-            colorScheme="blackAlpha"
-            bg="gray.700"
-            onClick={() => showModal(Formulario, { onConfirm: closeModal })}
-          >
-            Nova Transação
-          </Button>
+          <ActiveLink href="/dashboard" passHref shouldMatchExactHref>
+            <ChakraLink>Home</ChakraLink>
+          </ActiveLink>
+          <ActiveLink href="/periods" passHref>
+            <ChakraLink>Periodos</ChakraLink>
+          </ActiveLink>
+          <ActiveLink href="/cards" passHref>
+            <ChakraLink>Cartões</ChakraLink>
+          </ActiveLink>
 
           <Profile user={user} onSignout={signout} />
         </Stack>

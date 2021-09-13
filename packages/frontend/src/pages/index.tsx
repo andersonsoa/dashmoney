@@ -1,29 +1,80 @@
-import { Header } from "../components/Header";
-import { Summary } from "../components/Summary";
-import { Container } from "../components/Container";
-import { TransactionsTable } from "../components/TransactionsTable";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { SSRAuth } from "../utils/SSRAuth";
-import { DashModal } from "../components/DashModal";
-import { Box, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-export default function Home() {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+import { Brand } from "../components/Header/Brand";
+import { useAuth } from "../contexts/AuthContext";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { SSRGuest } from "../utils/SSRGuest";
+import { Input } from "../components/Form/Input";
+
+interface FormData {
+  email: string;
+  password: string;
+}
+
+const loginSchema = yup.object().shape({
+  email: yup.string().required("E-mail não informado").email("E-mail inválido"),
+  password: yup.string().required("Senha não informada"),
+});
+
+export default function Login() {
+  const { register, handleSubmit, formState } = useForm<FormData>({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const { signin } = useAuth();
+
+  async function handleSignin(data: FormData) {
+    await signin(data);
+  }
+
   return (
-    <>
-      <Header onAddTransaction={onOpen} />
-      <Container>
-        <Summary />
-        <TransactionsTable />
-        <DashModal isOpen={isOpen} onClose={onClose}>
-          <Box>Alo</Box>
-        </DashModal>
-      </Container>
-    </>
+    <Flex w="100vw" h="100vh" align="center" justify="center">
+      <Flex
+        as="form"
+        flexDir="column"
+        w="100%"
+        maxW={360}
+        bg="gray.800"
+        p="8"
+        borderRadius={8}
+        onSubmit={handleSubmit(handleSignin)}
+      >
+        <Stack spacing="4">
+          <Brand />
+          <Input
+            name="email"
+            type="email"
+            label="E-mail"
+            error={formState.errors?.email}
+            {...register("email")}
+          />
+          <Input
+            name="password"
+            type="password"
+            label="Senha"
+            error={formState.errors?.password}
+            {...register("password")}
+          />
+        </Stack>
+
+        <Button
+          type="submit"
+          mt="6"
+          colorScheme="pink"
+          size="lg"
+          isLoading={formState.isSubmitting}
+        >
+          Entrar
+        </Button>
+      </Flex>
+    </Flex>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = SSRAuth(
+export const getServerSideProps: GetServerSideProps = SSRGuest(
   async (ctx: GetServerSidePropsContext) => {
     return {
       props: {},

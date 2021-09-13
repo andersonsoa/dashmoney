@@ -5,6 +5,7 @@ import Router from "next/router";
 
 import { api } from "../services/api";
 import { useEffect } from "react";
+import { useToast } from "@chakra-ui/toast";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -29,8 +30,14 @@ interface AuthContextData {
 
 const AuthContext = createContext({} as AuthContextData);
 
+export async function signout() {
+  destroyCookie(undefined, "dash.money.auth");
+  await Router.push("/");
+}
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
+  const toast = useToast();
 
   async function signin(formData: FormData) {
     try {
@@ -47,14 +54,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       Router.push("/");
     } catch (err) {
-      console.log(err);
+      toast({
+        title: "Usuário ou Senha incorreto.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
-  }
-
-  async function signout() {
-    destroyCookie(undefined, "dash.money.auth");
-    await Router.push("/login");
-    setUser(null);
   }
 
   useEffect(() => {

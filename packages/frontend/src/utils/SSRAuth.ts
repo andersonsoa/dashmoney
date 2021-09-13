@@ -15,7 +15,7 @@ export function SSRAuth<T>(fn: GetServerSideProps<T>, options?: any) {
     if (!token) {
       return {
         redirect: {
-          destination: "/login",
+          destination: "/",
           permanent: false,
         },
       };
@@ -28,7 +28,7 @@ export function SSRAuth<T>(fn: GetServerSideProps<T>, options?: any) {
 
       return {
         redirect: {
-          destination: "/login",
+          destination: "/",
           permanent: false,
         },
       };

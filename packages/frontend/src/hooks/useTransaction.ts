@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import { currencyFormatter, dateFormatter } from "../utils/formatters";
 
-type TransactionType = "deposit" | "whitdrawn";
-
 type Transaction = {
   id: string;
   title: string;
@@ -19,8 +17,8 @@ export function useTransacion() {
     setIsLoading(true);
     api
       .get("/transactions")
-      .then(({ data }) => {
-        const transactions = data.map((transaction) => {
+      .then((response) => {
+        const transactions = response.data.map((transaction) => {
           return {
             ...transaction,
             value: currencyFormatter(transaction.value),
@@ -30,6 +28,7 @@ export function useTransacion() {
 
         setTransactions(transactions);
       })
+      .catch((err) => console.log(err.message))
       .finally(() => {
         setIsLoading(false);
       });

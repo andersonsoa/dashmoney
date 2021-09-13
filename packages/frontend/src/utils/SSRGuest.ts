@@ -14,7 +14,7 @@ export function SSRGuest<T>(fn: GetServerSideProps<T>, options?: any) {
     if (cookies["dash.money.auth"]) {
       return {
         redirect: {
-          destination: "/",
+          destination: "/dashboard",
           permanent: false,
         },
       };

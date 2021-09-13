@@ -10,9 +10,7 @@ export class CardRepository {
   static async show(cardId: string) {
     const repository = getRepository(Card);
 
-    const card = await repository.findOne(cardId, {
-      relations: ["transactions"],
-    });
+    const card = await repository.findOne(cardId);
 
     return card;
   }

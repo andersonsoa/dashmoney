@@ -1,7 +1,5 @@
 import {
-  Icon,
   Modal,
-  ModalCloseButton,
   ModalContent,
   ModalOverlay,
   useDisclosure,
@@ -21,7 +19,7 @@ interface ModalProviderProps {
 
 type ModalContextData = {
   isOpen: boolean;
-  showModal: (Component: any, props: any) => void;
+  showModal: (Component: any, props?: any) => void;
   closeModal: () => void;
 };
 
@@ -50,7 +48,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
       {children}
       <Modal isOpen={isOpen} onClose={closeModal}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent bg="transparent">
           {Component && <Component.element {...Component.props} />}
         </ModalContent>
       </Modal>
