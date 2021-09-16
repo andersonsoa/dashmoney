@@ -18,7 +18,7 @@ import { GetServerSidePropsContext } from "next";
 import { Container } from "../../components/Container";
 import { Header } from "../../components/Header";
 import { SSRAuth } from "../../utils/SSRAuth";
-import { RiDeleteBinLine, RiHandCoinLine } from "react-icons/ri";
+import { RiAddLine, RiDeleteBinLine, RiHandCoinLine } from "react-icons/ri";
 import { usePeriod } from "../../hooks/usePeriod";
 
 export default function Periods() {
@@ -34,7 +34,14 @@ export default function Periods() {
           </Text>
 
           <NextLink href="/periods/new" passHref>
-            <Button colorScheme="whiteAlpha">Adicionar</Button>
+            <Button
+              size="sm"
+              colorScheme="pink"
+              bg="pink.700"
+              leftIcon={<Icon as={RiAddLine} />}
+            >
+              Adicionar
+            </Button>
           </NextLink>
         </Flex>
 

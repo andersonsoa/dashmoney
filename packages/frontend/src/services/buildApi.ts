@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/toast";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { parseCookies } from "nookies";
 import { signout } from "../contexts/AuthContext";

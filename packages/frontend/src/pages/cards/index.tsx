@@ -18,7 +18,7 @@ import { Header } from "../../components/Header";
 import { SSRAuth } from "../../utils/SSRAuth";
 import NextLink from "next/link";
 import { useCard } from "../../hooks/useCard";
-import { RiEditBoxLine } from "react-icons/ri";
+import { RiAddLine, RiEditBoxLine } from "react-icons/ri";
 
 export default function Cards() {
   const { cards } = useCard();
@@ -33,7 +33,14 @@ export default function Cards() {
           </Text>
 
           <NextLink href="/cards/new" passHref>
-            <Button colorScheme="whiteAlpha">Adicionar</Button>
+            <Button
+              size="sm"
+              colorScheme="pink"
+              bg="pink.700"
+              leftIcon={<Icon as={RiAddLine} />}
+            >
+              Adicionar
+            </Button>
           </NextLink>
         </Flex>
 

@@ -9,7 +9,16 @@ export const theme = extendTheme({
     global: {
       body: {
         bg: "gray.700",
-        color: "gray.100",
+        color: "gray.50",
+      },
+    },
+  },
+  components: {
+    Modal: {
+      baseStyle: {
+        dialog: {
+          bg: "gray.700",
+        },
       },
     },
   },
